@@ -1,6 +1,6 @@
 /* ===========================
    FairPrice AI — App Engine
-   Notion + Toss Style
+   Light, Clean, Minimal
    =========================== */
 
 // ===========================
@@ -8,7 +8,7 @@
 // ===========================
 const priceDatabase = {
   "음식/외식": {
-    emoji: "🍜",
+    emoji: "",
     riskLevel: 35,
     items: [
       { name: "짜장면", avg: 7000, min: 5000, max: 12000, unit: "1인분", tips: ["배달보다 직접 방문이 1,000~2,000원 저렴합니다", "점심 특선 메뉴를 이용하면 할인됩니다"], alternatives: ["짬뽕 (비슷한 가격대)", "비빔밥 (건강한 대안)", "편의점 도시락 (저렴한 대안)"] },
@@ -37,7 +37,7 @@ const priceDatabase = {
     ]
   },
   "교통": {
-    emoji: "🚕",
+    emoji: "",
     riskLevel: 45,
     items: [
       { name: "택시 기본요금", avg: 4800, min: 4000, max: 6000, unit: "기본 1.6km", tips: ["카카오택시 등 앱 호출이 바가지 방지에 효과적입니다", "심야 할증(밤 10시~새벽 4시)은 20~40% 추가됩니다"], alternatives: ["지하철 (가장 저렴한 대안)", "버스 (1,400원 내외)"] },
@@ -54,7 +54,7 @@ const priceDatabase = {
     ]
   },
   "수리/서비스": {
-    emoji: "🔧",
+    emoji: "",
     riskLevel: 65,
     items: [
       { name: "에어컨 청소", avg: 80000, min: 50000, max: 150000, unit: "벽걸이 1대", tips: ["여름 성수기를 피하면 20~30% 저렴합니다", "2대 이상 동시 청소 시 할인받을 수 있습니다"], alternatives: ["직접 필터 청소 (무료)", "에어컨 청소 스프레이 (15,000원)"] },
@@ -71,7 +71,7 @@ const priceDatabase = {
     ]
   },
   "전자제품": {
-    emoji: "📱",
+    emoji: "",
     riskLevel: 25,
     items: [
       { name: "아이폰", avg: 1350000, min: 1100000, max: 1700000, unit: "최신 기본모델", tips: ["자급제 구매가 통신사 약정보다 총 비용이 저렴할 수 있습니다", "출시 3개월 후 가격이 안정됩니다"], alternatives: ["이전 세대 모델 (30% 저렴)", "갤럭시 (비슷한 성능)"] },
@@ -87,7 +87,7 @@ const priceDatabase = {
     ]
   },
   "생활용품": {
-    emoji: "🛒",
+    emoji: "",
     riskLevel: 20,
     items: [
       { name: "생수 2L", avg: 800, min: 400, max: 2000, unit: "1병", tips: ["대형마트 PB 생수가 가장 저렴합니다", "묶음 구매 시 개당 400원대 가능합니다"], alternatives: ["정수기 (장기적 절약)", "수돗물 (무료)"] },
@@ -103,7 +103,7 @@ const priceDatabase = {
     ]
   },
   "여행": {
-    emoji: "✈️",
+    emoji: "",
     riskLevel: 55,
     items: [
       { name: "호텔 서울 1박", avg: 150000, min: 60000, max: 400000, unit: "2인 기준", tips: ["주중이 주말보다 30~50% 저렴합니다", "호텔 예약 앱 비교는 필수입니다 (야놀자, 여기어때 등)"], alternatives: ["에어비앤비 (가성비)", "게스트하우스 (저렴)"] },
@@ -116,8 +116,37 @@ const priceDatabase = {
       { name: "공항 리무진 버스", avg: 16000, min: 10000, max: 18000, unit: "편도", tips: ["교통카드로 결제하면 할인될 수 있습니다"], alternatives: ["공항철도 (4,150원~)", "택시 (그룹 시 가성비)"] },
       { name: "여행 캐리어", avg: 80000, min: 30000, max: 300000, unit: "24인치 기준", tips: ["브랜드보다 소재와 바퀴 품질을 확인하세요", "온라인 구매가 매장보다 저렴합니다"], alternatives: ["캐리어 대여 (단기 여행)", "백팩 (가벼운 여행)"] },
     ]
+  },
+"의류/패션": {
+    emoji: "",
+    riskLevel: 40,
+    items: [
+      { name: "기본 면티", avg: 15000, min: 5000, max: 30000, unit: "1벌", tips: ["스파 브랜드(SPA)를 활용하면 저렴합니다"], alternatives: [] }
+    ]
+  },
+  "취미/여가": {
+    emoji: "",
+    riskLevel: 30,
+    items: [
+      { name: "영화 관람권", avg: 15000, min: 10000, max: 18000, unit: "1매", tips: ["통신사 할인을 적극 활용하세요"], alternatives: [] }
+    ]
+  },
+  "반려동물": {
+    emoji: "",
+    riskLevel: 60,
+    items: [
+      { name: "강아지 사료", avg: 20000, min: 10000, max: 40000, unit: "1kg", tips: ["대용량 구매 시 kg당 단가가 낮아집니다"], alternatives: [] }
+    ]
+  },
+  "기타": {
+    emoji: "",
+    riskLevel: 50,
+    items: [
+      { name: "종량제 봉투", avg: 490, min: 490, max: 490, unit: "20L", tips: ["지역별로 가격이 고정되어 있습니다"], alternatives: [] }
+    ]
   }
 };
+
 
 // ===========================
 // 2. AI Analysis Engine
@@ -177,13 +206,13 @@ class FairPriceAI {
 
     let verdict, emoji, badgeClass, badgeText, verdictText;
     if (price <= min * 1.05) {
-      verdict = 'cheap'; emoji = '💚'; badgeClass = 'badge-cheap'; badgeText = '저렴'; verdictText = '매우 합리적인 가격입니다!';
+      verdict = 'cheap'; emoji = ''; badgeClass = 'badge-cheap'; badgeText = '저렴'; verdictText = '매우 합리적인 가격입니다!';
     } else if (price <= avg * 1.1) {
-      verdict = 'fair'; emoji = '💙'; badgeClass = 'badge-fair'; badgeText = '적정'; verdictText = '적정한 가격 범위입니다.';
+      verdict = 'fair'; emoji = ''; badgeClass = 'badge-fair'; badgeText = '적정'; verdictText = '적정한 가격 범위입니다.';
     } else if (price <= max * 0.85) {
-      verdict = 'caution'; emoji = '🟡'; badgeClass = 'badge-caution'; badgeText = '주의'; verdictText = '평균보다 다소 높은 가격입니다.';
+      verdict = 'caution'; emoji = ''; badgeClass = 'badge-caution'; badgeText = '주의'; verdictText = '평균보다 다소 높은 가격입니다.';
     } else {
-      verdict = 'ripoff'; emoji = '🔴'; badgeClass = 'badge-ripoff'; badgeText = '바가지'; verdictText = '바가지 가격일 가능성이 높습니다!';
+      verdict = 'ripoff'; emoji = ''; badgeClass = 'badge-ripoff'; badgeText = '바가지'; verdictText = '바가지 가격일 가능성이 높습니다!';
     }
 
     const savings = price - avg;
@@ -215,7 +244,7 @@ class FairPriceAI {
 
   _noMatch(name, price) {
     return {
-      found: false, productName: name, inputPrice: price, emoji: '🤔',
+      found: false, productName: name, inputPrice: price, emoji: '',
       badgeClass: 'badge-fair', badgeText: '미등록', verdictText: '데이터베이스에 없는 품목입니다',
       analysisText: `죄송합니다. 「${name}」은(는) 아직 데이터베이스에 등록되지 않은 품목입니다. 현재 6개 카테고리 127개 이상의 품목을 지원하고 있으며, 지속적으로 데이터를 확장하고 있습니다. 카테고리에서 유사한 품목을 검색해보세요.`,
       tips: ['유사한 상품명으로 다시 검색해보세요', '카테고리에서 비슷한 품목을 찾아보세요'],
@@ -279,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autocompleteList.innerHTML = results.map(item =>
       `<div class="autocomplete-item" data-name="${item.name}">
         <span>${item.name} <small style="color:var(--text-muted)">— 평균 ₩${item.avg.toLocaleString()}</small></span>
-        <span class="item-category">${item.categoryEmoji} ${item.category}</span>
+        <span class="item-category">${item.category}</span>
       </div>`
     ).join('');
     autocompleteList.classList.add('active');
@@ -329,6 +358,12 @@ document.addEventListener('DOMContentLoaded', () => {
     badge.textContent = r.badgeText;
     badge.className = `badge ${r.badgeClass}`;
 
+    const displayStyle = r.found ? 'block' : 'none';
+    document.getElementById('gauge-section').style.display = displayStyle;
+    document.getElementById('metrics-section').style.display = displayStyle;
+    document.getElementById('chart-section').style.display = displayStyle;
+    document.getElementById('add-data-container').style.display = r.found ? 'none' : 'block';
+
     if (r.found) {
       document.getElementById('stat-input-price').textContent = `₩${r.inputPrice.toLocaleString()}`;
       document.getElementById('stat-avg-price').textContent = `₩${r.avgPrice.toLocaleString()}`;
@@ -357,8 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (resultChart) resultChart.destroy();
       const colors = {
         cheap: 'rgba(0, 196, 113, 0.7)',
-        fair: 'rgba(49, 130, 246, 0.7)',
-        caution: 'rgba(255, 138, 0, 0.7)',
+        fair: 'rgba(25, 31, 40, 0.7)',
+        caution: 'rgba(250, 219, 20, 0.7)',
         ripoff: 'rgba(240, 68, 82, 0.7)'
       };
       resultChart = new Chart(ctx, {
@@ -400,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'cat-card';
       card.innerHTML = `
-        <span class="cat-emoji">${data.emoji}</span>
+        <span class="cat-emoji" style="display:none;">${data.emoji}</span>
         <h3 class="cat-name">${name}</h3>
         <p class="cat-count">${data.items.length}개 품목</p>
         <div class="cat-tags">${tags}</div>
@@ -411,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openModal(name, data) {
-    document.getElementById('modal-title').textContent = `${data.emoji} ${name}`;
+    document.getElementById('modal-title').textContent = `${name}`;
     document.getElementById('modal-body').innerHTML = data.items.map(item => `
       <div class="modal-row">
         <div>
@@ -459,8 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
           data: cats.map(([, d]) => d.riskLevel),
           backgroundColor: cats.map(([, d]) => {
             if (d.riskLevel <= 25) return 'rgba(0,196,113,0.6)';
-            if (d.riskLevel <= 40) return 'rgba(49,130,246,0.6)';
-            if (d.riskLevel <= 55) return 'rgba(255,138,0,0.6)';
+            if (d.riskLevel <= 40) return 'rgba(25,31,40,0.6)';
+            if (d.riskLevel <= 55) return 'rgba(250,219,20,0.6)';
             return 'rgba(240,68,82,0.6)';
           }),
           borderRadius: 6, barThickness: 28
@@ -484,10 +519,10 @@ document.addEventListener('DOMContentLoaded', () => {
         datasets: [{
           label: '평균 가격',
           data: cats.map(([, d]) => Math.round(d.items.reduce((s, i) => s + i.avg, 0) / d.items.length)),
-          backgroundColor: 'rgba(49,130,246,0.1)',
-          borderColor: 'rgba(49,130,246,0.7)',
+          backgroundColor: 'rgba(211,47,47,0.1)',
+          borderColor: 'rgba(211,47,47,0.7)',
           borderWidth: 2,
-          pointBackgroundColor: 'rgba(49,130,246,1)',
+          pointBackgroundColor: 'rgba(211,47,47,1)',
           pointBorderColor: '#fff', pointBorderWidth: 1, pointRadius: 5
         }]
       },
@@ -502,4 +537,80 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Init ---
   renderCategories();
   renderTrends();
+
+  // --- Add Data Logic ---
+  const addDataModal = document.getElementById('add-data-modal');
+  const addNameInput = document.getElementById('add-name');
+  
+  const navAddData = document.getElementById('nav-add-data');
+  if(navAddData) {
+    navAddData.addEventListener('click', (e) => {
+      e.preventDefault();
+      addNameInput.value = '';
+      addDataModal.classList.remove('hidden');
+    });
+  }
+  const mobileAddData = document.getElementById('mobile-add-data');
+  if(mobileAddData) {
+    mobileAddData.addEventListener('click', (e) => {
+      e.preventDefault();
+      if(typeof mobileMenu !== 'undefined') mobileMenu.classList.remove('active');
+      addNameInput.value = '';
+      addDataModal.classList.remove('hidden');
+    });
+  }
+
+  
+  const openAddDataBtn = document.getElementById('open-add-data-btn');
+  if(openAddDataBtn) {
+    openAddDataBtn.addEventListener('click', () => {
+      addNameInput.value = document.getElementById('product-name').value.trim();
+      addDataModal.classList.remove('hidden');
+    });
+  }
+
+  const addModalClose = document.getElementById('add-modal-close');
+  if(addModalClose) {
+    addModalClose.addEventListener('click', () => {
+      addDataModal.classList.add('hidden');
+    });
+  }
+  
+  const addDataBackdrop = document.getElementById('add-data-backdrop');
+  if(addDataBackdrop) {
+    addDataBackdrop.addEventListener('click', () => {
+      addDataModal.classList.add('hidden');
+    });
+  }
+
+  const addDataForm = document.getElementById('add-data-form');
+  if(addDataForm) {
+    addDataForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const cat = document.getElementById('add-category').value;
+      const name = document.getElementById('add-name').value.trim();
+      const min = parseInt(document.getElementById('add-min').value);
+      const avg = parseInt(document.getElementById('add-avg').value);
+      const max = parseInt(document.getElementById('add-max').value);
+      const unit = document.getElementById('add-unit').value.trim();
+
+      if (priceDatabase[cat]) {
+        priceDatabase[cat].items.push({
+          name: name, min: min, avg: avg, max: max, unit: unit, tips: ["소비자가 직접 추가한 데이터입니다. 향후 AI가 추가 검증을 수행할 예정입니다."], alternatives: []
+        });
+        
+        // Re-init the AI to reflect new items
+        ai.allItems = ai._flattenItems();
+        
+        // Close modal and re-search
+        addDataModal.classList.add('hidden');
+        productInput.value = name;
+        form.dispatchEvent(new Event('submit'));
+        
+        // Optionally update categories view
+        renderCategories();
+      }
+    });
+  }
+
 });

@@ -1,5 +1,5 @@
 /* ===========================
-   FairPrice AI — Notion + Toss Style
+   FairPrice AI
    Light, Clean, Minimal
    =========================== */
 
@@ -12,8 +12,8 @@
 :root {
   /* Backgrounds */
   --bg-white: #FFFFFF;
-  --bg-gray: #F7F8FA;
-  --bg-gray-dark: #F2F3F6;
+  --bg-gray: #FFFFFF;
+  --bg-gray-dark: #FFFFFF;
 
   /* Text */
   --text-primary: #191F28;
@@ -21,7 +21,9 @@
   --text-muted: #8B95A1;
   --text-placeholder: #B0B8C1;
 
-  /* Accent — Toss Blue */
+  /* Primary Colors */
+  --primary-black: #191F28;
+  --primary-red: #D32F2F;
   --blue: #3182F6;
   --blue-light: #E8F3FF;
   --blue-bg: #F0F6FF;
@@ -29,8 +31,8 @@
   /* Semantic */
   --green: #00C471;
   --green-light: #E8FAF0;
-  --orange: #FF8A00;
-  --orange-light: #FFF4E5;
+  --yellow: #FADB14;
+  --yellow-light: #FFFFE6;
   --red: #F04452;
   --red-light: #FFF0F0;
 
@@ -109,7 +111,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  background: var(--blue);
+  background: var(--primary-black);
   color: #fff;
   font-size: 16px;
   font-weight: 800;
@@ -218,7 +220,7 @@ body {
 .hero-eyebrow {
   font-size: 14px;
   font-weight: 600;
-  color: var(--blue);
+  color: var(--primary-red);
   margin-bottom: 16px;
 }
 
@@ -244,19 +246,19 @@ body {
   gap: 8px;
   padding: 14px 28px;
   border-radius: var(--radius-md);
-  background: var(--blue);
+  background: var(--primary-black);
   color: #fff;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
   transition: var(--transition);
-  box-shadow: 0 2px 8px rgba(49, 130, 246, 0.25);
+  box-shadow: 0 2px 8px rgba(25, 31, 40, 0.25);
 }
 
 .hero-cta:hover {
-  background: #1B6CED;
+  background: var(--primary-red);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(49, 130, 246, 0.3);
+  box-shadow: 0 4px 14px rgba(211, 47, 47, 0.3);
 }
 
 .hero-stats {
@@ -373,8 +375,8 @@ body {
 .form-field input:focus,
 .form-field select:focus,
 .field-input-wrap input:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px var(--blue-light);
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
 }
 
 .form-field select {
@@ -400,7 +402,7 @@ body {
   padding: 14px;
   border-radius: var(--radius-md);
   border: none;
-  background: var(--blue);
+  background: var(--primary-black);
   color: #fff;
   font-family: var(--font);
   font-size: 15px;
@@ -410,7 +412,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: #1B6CED;
+  background: var(--primary-red);
 }
 
 .btn-primary:active {
@@ -513,11 +515,9 @@ body {
   transition: var(--transition);
 }
 
-.chip:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-  background: var(--blue-light);
-}
+.chip:nth-child(3n+1):hover { border-color: var(--green); color: var(--green); background: var(--green-light); }
+.chip:nth-child(3n+2):hover { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-light); }
+.chip:nth-child(3n):hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
 
 /* ===========================
    Result
@@ -586,7 +586,7 @@ body {
 
 .badge-cheap { background: var(--green-light); color: var(--green); }
 .badge-fair { background: var(--blue-light); color: var(--blue); }
-.badge-caution { background: var(--orange-light); color: var(--orange); }
+.badge-caution { background: var(--yellow-light); color: var(--yellow); }
 .badge-ripoff { background: var(--red-light); color: var(--red); }
 
 /* Result Sections */
@@ -624,7 +624,7 @@ body {
   background: linear-gradient(90deg,
     var(--green) 0%,
     var(--blue) 35%,
-    var(--orange) 70%,
+    var(--yellow) 70%,
     var(--red) 100%
   );
   position: relative;
@@ -705,7 +705,7 @@ body {
 
 /* AI Report */
 .ai-report {
-  background: var(--blue-bg);
+  background: #FAFAFA;
   border-radius: var(--radius-md);
   padding: 20px;
 }
@@ -716,7 +716,7 @@ body {
   gap: 8px;
   margin-bottom: 10px;
   font-size: 14px;
-  color: var(--blue);
+  color: var(--primary-red);
 }
 
 .ai-report p {
@@ -765,7 +765,7 @@ body {
   position: absolute;
   left: 0;
   font-weight: 900;
-  color: var(--blue);
+  color: var(--primary-red);
 }
 
 /* Chart */
@@ -813,11 +813,9 @@ body {
   transition: var(--transition);
 }
 
-.cat-card:hover {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
+.cat-card:nth-child(3n+1):hover { border-color: var(--green); box-shadow: 0 4px 14px rgba(0, 196, 113, 0.15); transform: translateY(-2px); }
+.cat-card:nth-child(3n+2):hover { border-color: var(--yellow); box-shadow: 0 4px 14px rgba(250, 219, 20, 0.15); transform: translateY(-2px); }
+.cat-card:nth-child(3n):hover { border-color: var(--red); box-shadow: 0 4px 14px rgba(240, 68, 82, 0.15); transform: translateY(-2px); }
 
 .cat-emoji {
   font-size: 32px;
@@ -962,9 +960,9 @@ body {
 .modal-analyze-btn {
   padding: 5px 12px;
   border-radius: 100px;
-  border: 1px solid var(--blue);
-  background: var(--blue-light);
-  color: var(--blue);
+  border: 1px solid var(--primary-black);
+  background: #fff;
+  color: var(--primary-black);
   font-family: var(--font);
   font-size: 12px;
   font-weight: 600;
@@ -973,7 +971,7 @@ body {
 }
 
 .modal-analyze-btn:hover {
-  background: var(--blue);
+  background: var(--primary-black);
   color: #fff;
 }
 
@@ -1022,11 +1020,8 @@ body {
   transition: var(--transition);
 }
 
-.feature-card:hover {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
+.feature-card:nth-child(odd):hover { border-color: var(--primary-red); box-shadow: 0 4px 14px rgba(211, 47, 47, 0.15); transform: translateY(-2px); }
+.feature-card:nth-child(even):hover { border-color: var(--primary-black); box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
 .feature-icon {
   font-size: 32px;
@@ -1083,7 +1078,7 @@ body {
 
 .bm-price {
   font-size: 13px;
-  color: var(--blue);
+  color: var(--primary-red);
   font-weight: 600;
 }
 
@@ -1154,4 +1149,16 @@ body {
 @media (max-width: 480px) {
   .features-grid, .bm-grid { grid-template-columns: 1fr; }
   .chip-row { flex-direction: column; }
+}
+
+.chart-wrap {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.chart-wrap-lg {
+  position: relative;
+  height: 400px;
+  width: 100%;
 }
