@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FairPrice AI — 당신의 지갑을 지키는 AI</title>
+  <meta name="description" content="상품이나 서비스 가격을 입력하면 AI가 바가지 여부를 분석하고, 적정 가격과 절약 팁을 제공합니다.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="main-nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="logo-mark">F</div>
+        <span class="logo-text">FairPrice AI</span>
+      </a>
+      <div class="nav-links">
+        <a href="#analyze" class="nav-link">가격 분석</a>
+        <a href="#categories" class="nav-link">카테고리</a>
+        <a href="#trends" class="nav-link">트렌드</a>
+        <a href="#about" class="nav-link">서비스 소개</a>
+      </div>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="#analyze" class="mobile-link">가격 분석</a>
+    <a href="#categories" class="mobile-link">카테고리</a>
+    <a href="#trends" class="mobile-link">트렌드</a>
+    <a href="#about" class="mobile-link">서비스 소개</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-content">
+      <p class="hero-eyebrow">AI 기반 가격 분석 서비스</p>
+      <h1 class="hero-title">
+        혹시 나만 비싸게<br>사고 있는 건 아닐까?
+      </h1>
+      <p class="hero-subtitle">
+        상품이나 서비스 가격을 입력하면, AI가 시장 데이터를 기반으로<br>
+        적정 가격인지 분석해 드립니다.
+      </p>
+      <a href="#analyze" class="hero-cta">
+        가격 분석 시작하기
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <span class="stat-num" data-count="127">0</span>
+          <span class="stat-lbl">분석 가능 품목</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-pill">
+          <span class="stat-num" data-count="6">0</span>
+          <span class="stat-lbl">카테고리</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-pill">
+          <span class="stat-num" data-count="98">0</span>
+          <span class="stat-lbl">분석 정확도 %</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Analysis Section -->
+  <section id="analyze" class="analyze-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">가격 분석</h2>
+        <p class="section-desc">상품명과 가격을 입력하면 AI가 적정 가격 여부를 판단합니다.</p>
+      </div>
+
+      <div class="analyze-card">
+        <form id="analyze-form" class="analyze-form">
+          <div class="form-field">
+            <label for="product-name">상품 / 서비스명</label>
+            <div class="field-input-wrap">
+              <input type="text" id="product-name" placeholder="예: 짜장면, 택시 기본요금, 에어컨 청소" autocomplete="off" required>
+              <div id="autocomplete-list" class="autocomplete-list"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="product-price">지불 가격 (원)</label>
+              <input type="number" id="product-price" placeholder="예: 8000" min="0" required>
+            </div>
+            <div class="form-field">
+              <label for="product-location">구매 장소</label>
+              <select id="product-location">
+                <option value="general">일반</option>
+                <option value="tourist">관광지</option>
+                <option value="market">재래시장</option>
+                <option value="online">온라인</option>
+                <option value="abroad">해외</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" id="analyze-btn" class="btn-primary">
+            <span class="btn-text">AI 분석 시작</span>
+            <span class="btn-loading"><span class="spinner"></span>분석 중...</span>
+          </button>
+        </form>
+
+        <div class="quick-examples">
+          <span class="examples-label">빠른 예시</span>
+          <div class="chip-row">
+            <button class="chip" data-name="짜장면" data-price="9000">짜장면 9,000원</button>
+            <button class="chip" data-name="아메리카노" data-price="6500">아메리카노 6,500원</button>
+            <button class="chip" data-name="택시 기본요금" data-price="5500">택시 기본 5,500원</button>
+            <button class="chip" data-name="에어컨 청소" data-price="150000">에어컨 청소 15만원</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div id="result-container" class="result-container hidden">
+        <div id="result-card" class="result-card">
+          <!-- Verdict Banner -->
+          <div class="verdict-banner" id="verdict-banner">
+            <div class="verdict-left">
+              <span id="result-emoji" class="verdict-emoji">💙</span>
+              <div>
+                <h3 id="result-product-name" class="verdict-name">짜장면</h3>
+                <p id="result-verdict" class="verdict-text">적정 가격입니다</p>
+              </div>
+            </div>
+            <span id="result-badge" class="badge badge-fair">적정</span>
+          </div>
+
+          <!-- Gauge -->
+          <div class="result-section">
+            <div class="gauge-area">
+              <div class="gauge-header">
+                <span>최저가</span><span>평균가</span><span>최고가</span>
+              </div>
+              <div class="gauge-bar">
+                <div class="gauge-track">
+                  <div class="gauge-pointer" id="gauge-marker">
+                    <div class="pointer-label" id="marker-tooltip">₩8,000</div>
+                  </div>
+                </div>
+              </div>
+              <div class="gauge-footer">
+                <span id="gauge-min">₩5,000</span>
+                <span id="gauge-avg">₩7,000</span>
+                <span id="gauge-max">₩12,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Metrics -->
+          <div class="result-section">
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <span class="metric-label">입력 가격</span>
+                <span id="stat-input-price" class="metric-value">₩8,000</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">시장 평균가</span>
+                <span id="stat-avg-price" class="metric-value">₩7,000</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">가격 수준</span>
+                <span id="stat-percentile" class="metric-value">상위 35%</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label" id="savings-label">절약 가능 금액</span>
+                <span id="stat-savings" class="metric-value text-loss">₩1,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Report -->
+          <div class="result-section">
+            <div class="ai-report">
+              <div class="ai-report-header">
+                <span>🤖</span>
+                <strong>AI 분석 리포트</strong>
+              </div>
+              <p id="ai-analysis-text">분석 결과가 여기에 표시됩니다.</p>
+            </div>
+          </div>
+
+          <!-- Tips & Alternatives -->
+          <div class="result-section tips-grid">
+            <div class="tip-box">
+              <h4>💡 절약 팁</h4>
+              <ul id="tips-list"><li>팁이 여기에 표시됩니다</li></ul>
+            </div>
+            <div class="tip-box">
+              <h4>🔄 대안 추천</h4>
+              <ul id="alternatives-list"><li>대안이 여기에 표시됩니다</li></ul>
+            </div>
+          </div>
+
+          <!-- Chart -->
+          <div class="result-section chart-section">
+            <h4 class="chart-heading">가격 분포 비교</h4>
+            <div class="chart-wrap"><canvas id="result-chart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section id="categories" class="categories-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">카테고리</h2>
+        <p class="section-desc">6개 카테고리, 127개 이상의 품목 데이터를 보유하고 있습니다.</p>
+      </div>
+      <div id="category-grid" class="category-grid"></div>
+
+      <!-- Modal -->
+      <div id="category-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-box">
+          <div class="modal-top">
+            <h3 id="modal-title">카테고리</h3>
+            <button id="modal-close" class="modal-close-btn">&times;</button>
+          </div>
+          <div id="modal-body" class="modal-body"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trends Section -->
+  <section id="trends" class="trends-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">가격 트렌드</h2>
+        <p class="section-desc">카테고리별 바가지 위험도와 평균 가격대를 확인하세요.</p>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card">
+          <h4 class="chart-heading">카테고리별 바가지 위험도</h4>
+          <div class="chart-wrap-lg"><canvas id="risk-chart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4 class="chart-heading">카테고리별 평균 가격대</h4>
+          <div class="chart-wrap-lg"><canvas id="price-chart"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">왜 FairPrice AI인가요?</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>AI 기반 분석</h3>
+          <p>단순 가격 비교가 아닌, AI가 품목별 특성과 장소, 시즌 등 맥락까지 반영하여 정밀 분석합니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>오프라인 + 온라인</h3>
+          <p>택시비, 수리비, 음식값 등 오프라인 서비스까지 분석하는 유일한 가격 비교 서비스입니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>3초 안에 결과</h3>
+          <p>복잡한 검색 없이 상품명과 가격만 입력하면 즉시 분석 결과를 확인할 수 있습니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💡</div>
+          <h3>맞춤 절약 팁</h3>
+          <p>판정을 넘어, 더 저렴하게 구매하는 방법과 대안까지 AI가 추천합니다.</p>
+        </div>
+      </div>
+
+      <!-- BM -->
+      <div class="bm-area">
+        <h3 class="bm-heading">비즈니스 모델</h3>
+        <div class="bm-grid">
+          <div class="bm-item">
+            <span class="bm-emoji">👑</span>
+            <strong>프리미엄 구독</strong>
+            <span class="bm-price">월 4,900원</span>
+            <p>무제한 분석, 상세 리포트, 가격 알림</p>
+          </div>
+          <div class="bm-item">
+            <span class="bm-emoji">🤝</span>
+            <strong>제휴 수수료</strong>
+            <span class="bm-price">건당 수수료</span>
+            <p>최저가 쇼핑몰/서비스 연결 시 수수료</p>
+          </div>
+          <div class="bm-item">
+            <span class="bm-emoji">📢</span>
+            <strong>광고 수익</strong>
+            <span class="bm-price">CPM / CPC</span>
+            <p>관련 상품 및 서비스 광고 노출</p>
+          </div>
+          <div class="bm-item">
+            <span class="bm-emoji">🔗</span>
+            <strong>B2B API</strong>
+            <span class="bm-price">API 구독</span>
+            <p>소비자 가격 감시 API 제공</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo-mark sm">F</div>
+        <span>FairPrice AI</span>
+      </div>
+      <p class="footer-copy">&copy; 2025 FairPrice AI · AI 스타트업 프로젝트</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
