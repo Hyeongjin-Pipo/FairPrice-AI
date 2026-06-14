@@ -13,28 +13,26 @@
 
 ## 실행 방법
 
-### 방법 1: 터미널로 실행 (권장)
+### 1. 저장소 클론
 
 ```bash
-# 1. 저장소 클론
 git clone https://github.com/Hyeongjin-Pipo/FairPrice-AI.git
-
-# 2. 폴더 이동
 cd FairPrice-AI
+```
 
-# 3. 로컬 서버 실행 (Python 3 필요)
+### 2. 로컬 서버 실행
+
+```bash
 python -m http.server 8000
 ```
 
-브라우저에서 `http://localhost:8000` 접속
+### 3. 브라우저에서 접속
 
-### 방법 2: 파일로 직접 열기
+```
+http://localhost:8000
+```
 
-`index.html` 파일을 브라우저에서 더블클릭하여 열기
-
-### 방법 3: GitHub Pages
-
-https://hyeongjin-pipo.github.io/FairPrice-AI/
+> Python이 설치되어 있어야 합니다. (`python --version` 으로 확인)
 
 ## 기술 스택
 
